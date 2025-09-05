@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             descricao: descricao,
             status: 'aberto',
             dataAbertura: new Date().toLocaleDateString('pt-BR'),
-            dataConclusao: null // Novo campo
+            dataConclusao: null
         };
 
         tickets.push(novoTicket);
@@ -80,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
             setorInfo += ` (${ticket.sala})`;
         }
         
-        // Determina qual data mostrar
         const dataInfo = ticket.status === 'concluido' ? `<strong>Data de Conclusão:</strong> ${ticket.dataConclusao}` : `<strong>Data de Abertura:</strong> ${ticket.dataAbertura}`;
 
         ticketDiv.innerHTML = `
@@ -96,16 +95,20 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         const statusSpan = ticketDiv.querySelector('.ticket__status');
-        statusSpan.addEventListener('click', () => {
-            toggleStatus(ticket);
-        });
+        if (statusSpan) { // Verifica se o span existe
+            statusSpan.addEventListener('click', () => {
+                toggleStatus(ticket);
+            });
+        }
         
         const deleteBtn = ticketDiv.querySelector('.ticket__delete-btn');
-        deleteBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const ticketId = parseInt(e.currentTarget.dataset.id);
-            deleteTicket(ticketId);
-        });
+        if (deleteBtn) { // Verifica se o botão existe
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const ticketId = parseInt(e.currentTarget.dataset.id);
+                deleteTicket(ticketId);
+            });
+        }
 
         return ticketDiv;
     }
@@ -123,11 +126,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const nextIndex = (currentIndex + 1) % 3;
         ticket.status = ['aberto', 'analise', 'concluido'][nextIndex];
         
-        // Se o novo status for "concluido", registra a data atual
         if (ticket.status === 'concluido') {
             ticket.dataConclusao = new Date().toLocaleDateString('pt-BR');
         } else {
-            ticket.dataConclusao = null; // Limpa a data se o status mudar
+            ticket.dataConclusao = null;
         }
 
         saveTickets();

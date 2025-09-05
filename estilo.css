@@ -1,3 +1,21 @@
+/*
+ * CSS Profissional - Sistema de Chamados de TI
+ * Autor: IA
+ * Versão: 2.1
+ * ----------------------------------------------------
+ * Guia de Paleta de Cores:
+ * --color-primary: Principal (Verde)
+ * --color-secondary: Textos e elementos de apoio
+ * --color-bg-page: Cor de fundo da página
+ * --color-bg-card: Cor de fundo dos cartões (formulário e tickets)
+ *
+ * Guia de Cores de Status:
+ * --status-green: Concluído
+ * --status-yellow: Em Análise
+ * --status-red: Não Feito / Aberto
+ * ----------------------------------------------------
+ */
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 :root {
@@ -22,7 +40,7 @@
 }
 
 html {
-    font-size: 16px; /* Base para rem */
+    font-size: 16px;
 }
 
 body {
@@ -143,10 +161,10 @@ button:hover {
     padding: 1.5rem;
     border-radius: 12px;
     box-shadow: var(--color-shadow);
-    position: relative;
+    position: relative; /* ESSA REGRA É CRUCIAL PARA A LIXEIRA */
     border-left: 8px solid;
     transition: transform 0.2s ease;
-    overflow: hidden; /* Garante que o conteúdo não saia da borda */
+    overflow: hidden;
 }
 
 .ticket:hover {
@@ -170,7 +188,7 @@ button:hover {
     font-size: 0.9rem;
     color: var(--color-secondary);
     margin-bottom: 0.5rem;
-    word-wrap: break-word; /* Força quebra de linha em palavras longas */
+    word-wrap: break-word;
 }
 
 .ticket p strong {
@@ -190,7 +208,7 @@ button:hover {
 }
 
 .ticket__delete-btn {
-    position: absolute;
+    position: absolute; /* ESSA REGRA É CRUCIAL */
     top: 10px;
     right: 10px;
     background: none;
@@ -213,7 +231,6 @@ button:hover {
 .ticket--status-analise .ticket__status { background-color: var(--status-yellow); }
 .ticket--status-concluido .ticket__status { background-color: var(--status-green); }
 
-/* Novas regras para a lixeira */
 .ticket--status-aberto .ticket__delete-btn { color: var(--status-red); }
 .ticket--status-analise .ticket__delete-btn { color: var(--status-yellow); }
 .ticket--status-concluido .ticket__delete-btn { color: var(--status-green); }
