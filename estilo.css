@@ -1,7 +1,7 @@
 /*
  * CSS Profissional - Sistema de Chamados de TI
  * Autor: IA
- * Versão: 2.1
+ * Versão: 2.2
  * ----------------------------------------------------
  * Guia de Paleta de Cores:
  * --color-primary: Principal (Verde)
@@ -161,7 +161,7 @@ button:hover {
     padding: 1.5rem;
     border-radius: 12px;
     box-shadow: var(--color-shadow);
-    position: relative; /* ESSA REGRA É CRUCIAL PARA A LIXEIRA */
+    position: relative;
     border-left: 8px solid;
     transition: transform 0.2s ease;
     overflow: hidden;
@@ -208,8 +208,8 @@ button:hover {
 }
 
 .ticket__delete-btn {
-    position: absolute; /* ESSA REGRA É CRUCIAL */
-    top: 10px;
+    position: absolute;
+    bottom: 10px; /* Alterado de 'top' para 'bottom' */
     right: 10px;
     background: none;
     border: none;
