@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Chamados de TI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-headset"></i> Sistema de Chamados de TI</h1>
+    </header>
+
+    <main>
+        <section class="form-container">
+            <h2><i class="fas fa-plus-circle"></i> Abrir Novo Chamado</h2>
+            <form id="chamado-form">
+                <div class="input-group">
+                    <label for="usuario">Usuário:</label>
+                    <select id="usuario" required>
+                        <option value="">Selecione um usuário</option>
+                        <option value="Hermeson">Hermeson</option>
+                        <option value="Luanderson">Luanderson</option>
+                        <option value="Ghabriel">Ghabriel</option>
+                        <option value="Emanoel">Emanoel</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="setor">Setor:</label>
+                    <select id="setor" required>
+                        <option value="">Selecione um setor</option>
+                        <option value="Comercial">Comercial</option>
+                        <option value="Financeiro">Financeiro</option>
+                        <option value="Sala dos Instrutores/servidor">Sala dos Instrutores/servidor</option>
+                        <option value="Pedagógico">Pedagógico</option>
+                        <option value="Sala de aula">Sala de aula</option>
+                        <option value="Secretaria">Secretaria</option>
+                        <option value="Wifi">Wifi</option>
+                    </select>
+                </div>
+                <div class="input-group sala-select hidden">
+                    <label for="sala">Sala de Aula:</label>
+                    <select id="sala"></select>
+                </div>
+                <div class="input-group">
+                    <label for="titulo">Título do Chamado:</label>
+                    <input type="text" id="titulo" required>
+                </div>
+                <div class="input-group">
+                    <label for="descricao">Descrição:</label>
+                    <textarea id="descricao" rows="5" required></textarea>
+                </div>
+                <button type="submit">Enviar Chamado</button>
+            </form>
+        </section>
+
+        <section class="tickets-container">
+            <h2><i class="fas fa-ticket-alt"></i> Tickets Abertos</h2>
+            <div class="tickets-grid" id="tickets-list">
+                </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Sistema de Chamados de TI. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
