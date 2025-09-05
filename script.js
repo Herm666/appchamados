@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('chamado-form');
-    const ticketsList = document.getElementById('tickets-list');
+    const ticketsListAbertos = document.getElementById('tickets-list-abertos');
+    const ticketsListConcluidos = document.getElementById('tickets-list-concluidos');
     const setorSelect = document.getElementById('setor');
     const salaSelectGroup = document.querySelector('.sala-select');
     const salaSelect = document.getElementById('sala');
@@ -44,56 +45,64 @@ document.addEventListener('DOMContentLoaded', () => {
             titulo: titulo,
             descricao: descricao,
             status: 'aberto',
-            data: new Date().toLocaleDateString('pt-BR')
+            dataAbertura: new Date().toLocaleDateString('pt-BR'),
+            dataConclusao: null // Novo campo
         };
 
         tickets.push(novoTicket);
         saveTickets();
         renderTickets();
         form.reset();
-        salaSelectGroup.classList.add('hidden'); // Esconde a sala novamente
+        salaSelectGroup.classList.add('hidden');
     });
 
     function renderTickets() {
-        ticketsList.innerHTML = '';
+        ticketsListAbertos.innerHTML = '';
+        ticketsListConcluidos.innerHTML = '';
+        
         tickets.forEach(ticket => {
             const ticketElement = createTicketElement(ticket);
-            ticketsList.appendChild(ticketElement);
+            if (ticket.status === 'concluido') {
+                ticketsListConcluidos.appendChild(ticketElement);
+            } else {
+                ticketsListAbertos.appendChild(ticketElement);
+            }
         });
     }
 
     function createTicketElement(ticket) {
         const ticketDiv = document.createElement('div');
         ticketDiv.classList.add('ticket');
-        ticketDiv.classList.add(`status-${ticket.status}`);
+        ticketDiv.classList.add(`ticket--status-${ticket.status}`);
 
         let setorInfo = `<strong>Setor:</strong> ${ticket.setor}`;
         if (ticket.setor === 'Sala de aula') {
             setorInfo += ` (${ticket.sala})`;
         }
+        
+        // Determina qual data mostrar
+        const dataInfo = ticket.status === 'concluido' ? `<strong>Data de Conclusão:</strong> ${ticket.dataConclusao}` : `<strong>Data de Abertura:</strong> ${ticket.dataAbertura}`;
 
         ticketDiv.innerHTML = `
-            <button class="delete-btn" data-id="${ticket.id}"><i class="fas fa-trash-alt"></i></button>
+            <button class="ticket__delete-btn" data-id="${ticket.id}"><i class="fas fa-trash-alt"></i></button>
             <div class="ticket-header">
                 <h3>${ticket.titulo}</h3>
-                <span class="status">${getStatusText(ticket.status)}</span>
+                <span class="ticket__status">${getStatusText(ticket.status)}</span>
             </div>
             <p><strong>Usuário:</strong> ${ticket.usuario}</p>
             <p>${setorInfo}</p>
             <p><strong>Descrição:</strong> ${ticket.descricao}</p>
-            <p><strong>Data:</strong> ${ticket.data}</p>
+            <p>${dataInfo}</p>
         `;
 
-        // Evento para mudar o status ao clicar no status
-        const statusSpan = ticketDiv.querySelector('.status');
+        const statusSpan = ticketDiv.querySelector('.ticket__status');
         statusSpan.addEventListener('click', () => {
             toggleStatus(ticket);
         });
         
-        // Evento para excluir o ticket
-        const deleteBtn = ticketDiv.querySelector('.delete-btn');
+        const deleteBtn = ticketDiv.querySelector('.ticket__delete-btn');
         deleteBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Evita que o clique no botão ative a mudança de status
+            e.stopPropagation();
             const ticketId = parseInt(e.currentTarget.dataset.id);
             deleteTicket(ticketId);
         });
@@ -101,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return ticketDiv;
     }
     
-    // Função para excluir o ticket
     function deleteTicket(id) {
         if (confirm('Tem certeza que deseja excluir este chamado?')) {
             tickets = tickets.filter(ticket => ticket.id !== id);
@@ -115,6 +123,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const nextIndex = (currentIndex + 1) % 3;
         ticket.status = ['aberto', 'analise', 'concluido'][nextIndex];
         
+        // Se o novo status for "concluido", registra a data atual
+        if (ticket.status === 'concluido') {
+            ticket.dataConclusao = new Date().toLocaleDateString('pt-BR');
+        } else {
+            ticket.dataConclusao = null; // Limpa a data se o status mudar
+        }
+
         saveTickets();
         renderTickets();
     }
