@@ -1,17 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 :root {
-    --color-primary: #28a745;
-    --color-secondary: #6c757d;
-    --color-bg-page: #f8f9fa;
-    --color-bg-card: #ffffff;
-    --color-text: #343a40;
-    --color-border: #e9ecef;
-    --color-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Paleta de Cores Atualizada */
+    --color-primary: #3498db; /* Azul vibrante para botões e títulos */
+    --color-primary-dark: #2980b9;
+    --color-secondary: #7f8c8d; /* Cinza para textos secundários */
+    --color-bg-page: #ecf0f1; /* Fundo cinza claro */
+    --color-bg-card: #ffffff; /* Branco para cartões */
+    --color-text: #2c3e50; /* Cinza escuro para o texto principal */
+    --color-border: #bdc3c7; /* Borda cinza suave */
+    --color-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Sombra mais destacada */
+    --color-shadow-hover: 0 12px 24px rgba(0, 0, 0, 0.2);
 
-    --status-green: #28a745;
-    --status-yellow: #ffc107;
-    --status-red: #dc3545;
+    /* Cores de Status e Prioridade */
+    --status-green: #2ecc71; /* Verde */
+    --status-yellow: #f1c40f; /* Amarelo */
+    --status-red: #e74c3c;   /* Vermelho */
 }
 
 /* Base e Tipografia */
@@ -27,9 +31,10 @@ html {
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: var(--color-bg-page);
+    background: linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 100%); /* Degradê no fundo */
     color: var(--color-text);
     line-height: 1.6;
+    min-height: 100vh; /* Ocupa a altura total da tela */
 }
 
 /* Layout e Componentes */
@@ -40,15 +45,16 @@ body {
 }
 
 header {
-    background-color: var(--color-primary);
+    background: var(--color-primary);
     color: white;
-    padding: 1.5rem 0;
+    padding: 2rem 0;
     text-align: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeInDown 1s ease-out;
 }
 
 header h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 700;
 }
 
@@ -59,6 +65,7 @@ main {
     margin: 2rem auto;
     padding: 0 1rem;
     grid-template-columns: 1fr;
+    animation: fadeIn 1.5s ease-out;
 }
 
 @media (min-width: 768px) {
@@ -72,10 +79,15 @@ section {
     padding: 2rem;
     border-radius: 12px;
     box-shadow: var(--color-shadow);
+    transition: box-shadow 0.3s ease;
+}
+
+section:hover {
+    box-shadow: var(--color-shadow-hover);
 }
 
 h2 {
-    color: var(--color-primary);
+    color: var(--color-primary-dark);
     margin-bottom: 1.5rem;
     border-bottom: 2px solid var(--color-border);
     padding-bottom: 0.5rem;
@@ -95,6 +107,7 @@ label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
+    color: var(--color-text);
 }
 
 input[type="text"],
@@ -111,25 +124,26 @@ select {
 input:focus, textarea:focus, select:focus {
     border-color: var(--color-primary);
     outline: none;
-    box-shadow: 0 0 5px rgba(40, 167, 69, 0.2);
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.4);
 }
 
 button {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.9rem;
     background-color: var(--color-primary);
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 1.1rem;
+    font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 button:hover {
-    background-color: #218838;
-    transform: translateY(-2px);
+    background-color: var(--color-primary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Tickets */
@@ -140,17 +154,19 @@ button:hover {
 }
 
 .ticket {
+    background-color: var(--color-bg-card);
     padding: 1.5rem;
     border-radius: 12px;
     box-shadow: var(--color-shadow);
     position: relative;
     border-left: 8px solid;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
     overflow: hidden;
 }
 
 .ticket:hover {
     transform: translateY(-5px);
+    box-shadow: var(--color-shadow-hover);
 }
 
 .ticket-header {
@@ -163,7 +179,8 @@ button:hover {
 .ticket h3 {
     margin: 0;
     font-size: 1.25rem;
-    font-weight: 500;
+    font-weight: 700;
+    color: var(--color-text);
 }
 
 .ticket p {
@@ -191,17 +208,19 @@ button:hover {
 
 .ticket__delete-btn {
     position: absolute;
-    bottom: 10px; /* Alterado de 'top' para 'bottom' */
+    bottom: 10px;
     right: 10px;
     background: none;
     border: none;
     font-size: 1.2rem;
     cursor: pointer;
-    transition: color 0.3s ease;
+    color: var(--color-secondary);
+    transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .ticket__delete-btn:hover {
-    transform: scale(1.1);
+    color: var(--status-red);
+    transform: scale(1.2);
 }
 
 /* Cores dos Tickets (modificadores) */
@@ -219,20 +238,15 @@ button:hover {
 
 /* --- REGRAS DE ESTILO PARA AS PRIORIDADES --- */
 .ticket.prioridade-alta {
-    border-color: var(--status-red);
+    border-left-color: var(--status-red);
 }
 
 .ticket.prioridade-media {
-    border-color: var(--status-yellow);
+    border-left-color: var(--status-yellow);
 }
 
 .ticket.prioridade-baixa {
-    border-color: var(--status-green);
-}
-/* --- FIM DAS REGRAS --- */
-
-.hidden {
-    display: none;
+    border-left-color: var(--status-green);
 }
 
 /* Rodapé */
@@ -242,4 +256,8 @@ footer {
     background-color: var(--color-secondary);
     color: white;
     margin-top: 2rem;
+}
+
+.hidden {
+    display: none;
 }
