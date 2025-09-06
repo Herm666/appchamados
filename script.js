@@ -36,10 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const sala = setor === 'Sala de aula' ? document.getElementById('sala').value : '';
         const titulo = document.getElementById('titulo').value;
         const descricao = document.getElementById('descricao').value;
-        
-        // NOVO: Captura o valor da prioridade
         const prioridade = document.getElementById('prioridade').value;
-
+        
         const novoTicket = {
             id: Date.now(),
             usuario: usuario,
@@ -48,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
             titulo: titulo,
             descricao: descricao,
             status: 'aberto',
-            // NOVO: Adiciona a prioridade ao objeto do ticket
             prioridade: prioridade,
             dataAbertura: new Date().toLocaleDateString('pt-BR'),
             dataConclusao: null
@@ -65,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ticketsListAbertos.innerHTML = '';
         ticketsListConcluidos.innerHTML = '';
         
-        // NOVO: Ordena os tickets por prioridade antes de renderizar (alta > media > baixa)
         const ticketsOrdenados = tickets.sort((a, b) => {
             const prioridadeOrder = { 'alta': 3, 'media': 2, 'baixa': 1 };
             return prioridadeOrder[b.prioridade] - prioridadeOrder[a.prioridade];
@@ -85,8 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const ticketDiv = document.createElement('div');
         ticketDiv.classList.add('ticket');
         ticketDiv.classList.add(`ticket--status-${ticket.status}`);
-        
-        // NOVO: Adiciona a classe de prioridade
         ticketDiv.classList.add(`prioridade-${ticket.prioridade}`);
 
         let setorInfo = `<strong>Setor:</strong> ${ticket.setor}`;
@@ -102,7 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h3>${ticket.titulo}</h3>
                 <span class="ticket__status">${getStatusText(ticket.status)}</span>
             </div>
-            <p><strong>Prioridade:</strong> ${ticket.prioridade.charAt(0).toUpperCase() + ticket.prioridade.slice(1)}</p>
+            <p>
+                <strong>Prioridade:</strong>
+                <span class="prioridade-texto-${ticket.prioridade}">
+                    ${ticket.prioridade.charAt(0).toUpperCase() + ticket.prioridade.slice(1)}
+                </span>
+            </p>
             <p><strong>Usuário:</strong> ${ticket.usuario}</p>
             <p>${setorInfo}</p>
             <p><strong>Descrição:</strong> ${ticket.descricao}</p>
