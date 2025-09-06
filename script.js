@@ -36,6 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const sala = setor === 'Sala de aula' ? document.getElementById('sala').value : '';
         const titulo = document.getElementById('titulo').value;
         const descricao = document.getElementById('descricao').value;
+        
+        // NOVO: Captura o valor da prioridade
+        const prioridade = document.getElementById('prioridade').value;
 
         const novoTicket = {
             id: Date.now(),
@@ -45,6 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
             titulo: titulo,
             descricao: descricao,
             status: 'aberto',
+            // NOVO: Adiciona a prioridade ao objeto do ticket
+            prioridade: prioridade,
             dataAbertura: new Date().toLocaleDateString('pt-BR'),
             dataConclusao: null
         };
@@ -60,7 +65,13 @@ document.addEventListener('DOMContentLoaded', () => {
         ticketsListAbertos.innerHTML = '';
         ticketsListConcluidos.innerHTML = '';
         
-        tickets.forEach(ticket => {
+        // NOVO: Ordena os tickets por prioridade antes de renderizar (alta > media > baixa)
+        const ticketsOrdenados = tickets.sort((a, b) => {
+            const prioridadeOrder = { 'alta': 3, 'media': 2, 'baixa': 1 };
+            return prioridadeOrder[b.prioridade] - prioridadeOrder[a.prioridade];
+        });
+
+        ticketsOrdenados.forEach(ticket => {
             const ticketElement = createTicketElement(ticket);
             if (ticket.status === 'concluido') {
                 ticketsListConcluidos.appendChild(ticketElement);
@@ -74,6 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const ticketDiv = document.createElement('div');
         ticketDiv.classList.add('ticket');
         ticketDiv.classList.add(`ticket--status-${ticket.status}`);
+        
+        // NOVO: Adiciona a classe de prioridade
+        ticketDiv.classList.add(`prioridade-${ticket.prioridade}`);
 
         let setorInfo = `<strong>Setor:</strong> ${ticket.setor}`;
         if (ticket.setor === 'Sala de aula') {
@@ -88,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h3>${ticket.titulo}</h3>
                 <span class="ticket__status">${getStatusText(ticket.status)}</span>
             </div>
+            <p><strong>Prioridade:</strong> ${ticket.prioridade.charAt(0).toUpperCase() + ticket.prioridade.slice(1)}</p>
             <p><strong>Usuário:</strong> ${ticket.usuario}</p>
             <p>${setorInfo}</p>
             <p><strong>Descrição:</strong> ${ticket.descricao}</p>
@@ -95,14 +110,14 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         const statusSpan = ticketDiv.querySelector('.ticket__status');
-        if (statusSpan) { // Verifica se o span existe
+        if (statusSpan) {
             statusSpan.addEventListener('click', () => {
                 toggleStatus(ticket);
             });
         }
         
         const deleteBtn = ticketDiv.querySelector('.ticket__delete-btn');
-        if (deleteBtn) { // Verifica se o botão existe
+        if (deleteBtn) {
             deleteBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const ticketId = parseInt(e.currentTarget.dataset.id);

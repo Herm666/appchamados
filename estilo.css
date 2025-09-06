@@ -1,21 +1,3 @@
-/*
- * CSS Profissional - Sistema de Chamados de TI
- * Autor: IA
- * Versão: 2.2
- * ----------------------------------------------------
- * Guia de Paleta de Cores:
- * --color-primary: Principal (Verde)
- * --color-secondary: Textos e elementos de apoio
- * --color-bg-page: Cor de fundo da página
- * --color-bg-card: Cor de fundo dos cartões (formulário e tickets)
- *
- * Guia de Cores de Status:
- * --status-green: Concluído
- * --status-yellow: Em Análise
- * --status-red: Não Feito / Aberto
- * ----------------------------------------------------
- */
-
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 :root {
@@ -235,6 +217,19 @@ button:hover {
 .ticket--status-analise .ticket__delete-btn { color: var(--status-yellow); }
 .ticket--status-concluido .ticket__delete-btn { color: var(--status-green); }
 
+/* --- REGRAS DE ESTILO PARA AS PRIORIDADES --- */
+.ticket.prioridade-alta {
+    border-color: var(--status-red);
+}
+
+.ticket.prioridade-media {
+    border-color: var(--status-yellow);
+}
+
+.ticket.prioridade-baixa {
+    border-color: var(--status-green);
+}
+/* --- FIM DAS REGRAS --- */
 
 .hidden {
     display: none;
