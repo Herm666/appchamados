@@ -173,14 +173,16 @@ button[type="submit"]:hover {
 }
 
 .ticket {
-    background-color: var(--color-bg-card);
+    background-color: var(--color-bg-card); /* Cor de fundo padrão, será sobrescrita pela prioridade */
     padding: 1.8rem;
     border-radius: 12px;
     box-shadow: var(--color-shadow-light);
     position: relative;
-    border-left: 8px solid;
-    transition: transform 0.2s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    border-left: 8px solid; /* A borda da prioridade/status */
+    transition: transform 0.2s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Adicionado background-color */
     overflow: hidden;
+    display: flex; /* Usar flexbox para melhor controle do conteúdo */
+    flex-direction: column;
 }
 
 .ticket:hover {
@@ -233,16 +235,30 @@ button[type="submit"]:hover {
     transform: scale(1.05);
 }
 
+/* NOVO: Container para data e lixeira */
+.ticket-footer-actions {
+    margin-top: auto; /* Empurra o footer para baixo no flexbox */
+    padding-top: 1rem; /* Espaçamento com o conteúdo acima */
+    border-top: 1px solid rgba(0,0,0,0.05); /* Linha divisória sutil */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ticket-footer-actions p {
+    margin-bottom: 0; /* Remove margem extra do parágrafo dentro do footer */
+    font-size: 0.85rem; /* Data um pouco menor */
+}
+
 .ticket__delete-btn {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
+    position: static; /* Remove posicionamento absoluto */
     background: none;
     border: none;
     font-size: 1.3rem;
     cursor: pointer;
-    color: var(--color-border);
+    color: var(--color-text-light); /* Cor padrão mais discreta */
     transition: color 0.3s ease, transform 0.2s ease;
+    margin-left: 10px; /* Pequeno espaçamento da data */
 }
 
 .ticket__delete-btn:hover {
@@ -262,17 +278,17 @@ button[type="submit"]:hover {
 /* --- REGRAS DE ESTILO PARA AS PRIORIDADES (MODIFICADO) --- */
 .ticket.prioridade-alta {
     border-left-color: var(--status-red);
-    background-color: rgba(231, 76, 60, 0.08);
+    background-color: rgba(231, 76, 60, 0.08); /* Fundo vermelho suave */
 }
 
 .ticket.prioridade-media {
     border-left-color: var(--status-yellow);
-    background-color: rgba(243, 156, 18, 0.08);
+    background-color: rgba(243, 156, 18, 0.08); /* Fundo amarelo suave */
 }
 
 .ticket.prioridade-baixa {
     border-left-color: var(--status-green);
-    background-color: rgba(39, 174, 96, 0.08);
+    background-color: rgba(39, 174, 96, 0.08); /* Fundo verde suave */
 }
 
 /* --- Estilos para o texto da prioridade --- */

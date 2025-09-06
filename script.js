@@ -64,6 +64,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const ticketsOrdenados = tickets.sort((a, b) => {
             const prioridadeOrder = { 'alta': 3, 'media': 2, 'baixa': 1 };
+            // Para manter tickets abertos acima dos concluídos na ordenação geral,
+            // ou você pode ter seções separadas como já está fazendo.
+            // Seção de abertos já é ordenada.
             return prioridadeOrder[b.prioridade] - prioridadeOrder[a.prioridade];
         });
 
@@ -81,17 +84,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const ticketDiv = document.createElement('div');
         ticketDiv.classList.add('ticket');
         ticketDiv.classList.add(`ticket--status-${ticket.status}`);
-        ticketDiv.classList.add(`prioridade-${ticket.prioridade}`);
+        ticketDiv.classList.add(`prioridade-${ticket.prioridade}`); // Aplica a classe para o fundo do card e a borda
 
         let setorInfo = `<strong>Setor:</strong> ${ticket.setor}`;
         if (ticket.setor === 'Sala de aula') {
             setorInfo += ` (${ticket.sala})`;
         }
         
-        const dataInfo = ticket.status === 'concluido' ? `<strong>Data de Conclusão:</strong> ${ticket.dataConclusao}` : `<strong>Data de Abertura:</strong> ${ticket.dataAbertura}`;
+        const dataInfo = ticket.status === 'concluido' ? `Data de Conclusão:</strong> ${ticket.dataConclusao}` : `Data de Abertura:</strong> ${ticket.dataAbertura}`;
 
         ticketDiv.innerHTML = `
-            <button class="ticket__delete-btn" data-id="${ticket.id}"><i class="fas fa-trash-alt"></i></button>
             <div class="ticket-header">
                 <h3>${ticket.titulo}</h3>
                 <span class="ticket__status">${getStatusText(ticket.status)}</span>
@@ -105,7 +107,11 @@ document.addEventListener('DOMContentLoaded', () => {
             <p><strong>Usuário:</strong> ${ticket.usuario}</p>
             <p>${setorInfo}</p>
             <p><strong>Descrição:</strong> ${ticket.descricao}</p>
-            <p>${dataInfo}</p>
+            
+            <div class="ticket-footer-actions">
+                <p><strong>${dataInfo}</strong></p>
+                <button class="ticket__delete-btn" data-id="${ticket.id}"><i class="fas fa-trash-alt"></i></button>
+            </div>
         `;
 
         const statusSpan = ticketDiv.querySelector('.ticket__status');
