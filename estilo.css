@@ -179,7 +179,7 @@ button[type="submit"]:hover {
     box-shadow: var(--color-shadow-light);
     position: relative;
     border-left: 8px solid;
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    transition: transform 0.2s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     overflow: hidden;
 }
 
@@ -259,17 +259,20 @@ button[type="submit"]:hover {
 .ticket--status-analise .ticket__status { background-color: var(--status-yellow); }
 .ticket--status-concluido .ticket__status { background-color: var(--status-green); }
 
-/* --- REGRAS DE ESTILO PARA AS PRIORIDADES --- */
+/* --- REGRAS DE ESTILO PARA AS PRIORIDADES (MODIFICADO) --- */
 .ticket.prioridade-alta {
     border-left-color: var(--status-red);
+    background-color: rgba(231, 76, 60, 0.08);
 }
 
 .ticket.prioridade-media {
     border-left-color: var(--status-yellow);
+    background-color: rgba(243, 156, 18, 0.08);
 }
 
 .ticket.prioridade-baixa {
     border-left-color: var(--status-green);
+    background-color: rgba(39, 174, 96, 0.08);
 }
 
 /* --- Estilos para o texto da prioridade --- */
